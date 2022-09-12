@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "csv-server": "^0.5.3",
     "express": "^4.18.1"
   }
 }
