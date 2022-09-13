@@ -17,7 +17,7 @@ const launch = {
 
 
 function getAllLaunches() {
-    return Array.from(launches)
+    return  Array.from(launches.values())
 }
 
 function addNewLaunch(launch) {
