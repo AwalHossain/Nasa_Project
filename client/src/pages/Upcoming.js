@@ -1,12 +1,10 @@
-import { useMemo } from "react";
-import { 
-  withStyles,
+import {
   Appear,
   Link,
   Paragraph,
-  Table,
-  Words,
+  Table, withStyles, Words
 } from "arwes";
+import { useMemo } from "react";
 
 import Clickable from "../components/Clickable";
 
@@ -28,6 +26,7 @@ const Upcoming = props => {
   const tableBody = useMemo(() => {
     return launches?.filter((launch) => launch.upcoming)
       .map((launch) => {
+
         return <tr key={String(launch.flightNumber)}>
           <td>
             <Clickable style={{color:"red"}}>
@@ -44,7 +43,7 @@ const Upcoming = props => {
         </tr>;
       });
   }, [launches, abortLaunch, classes.link]);
-
+console.log(tableBody,"odoo");
   return <Appear id="upcoming" animate show={entered}>
     <Paragraph>Upcoming missions including both SpaceX launches and newly scheduled Zero to Mastery rockets.</Paragraph>
     <Words animate>Warning! Clicking on the ✖ aborts the mission.</Words>
