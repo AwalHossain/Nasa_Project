@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const { parse } = require('csv-parse');
-const planet = require('./planet.mongo');
+const planets = require('./planet.mongo');
 
 
 const habitablePlanets = [];
@@ -15,7 +15,7 @@ function isHabitablePlanet(planet) {
       && planet['koi_prad'] < 1.6;
   }
 
-function loadPlanetsData(){
+async function loadPlanetsData(){
 
     return new Promise((resolve, reject)=>{
         fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kepler_data.csv'))
@@ -26,7 +26,7 @@ function loadPlanetsData(){
           .on('data', async (data) => {
             if (isHabitablePlanet(data)) {
               // console.log(data.kepler_name);
-              savePlanet(data);
+             await savePlanet(data);
         
             }
           })
@@ -45,13 +45,13 @@ function loadPlanetsData(){
 
 
 async function getAllPlanets (){
-   return await planet.find({})
+   return await planets.find({})
 }
 
 
 async function savePlanet(data){
   try{
-    await planet.updateOne({
+    await planets.updateOne({
       keplerName: data.kepler_name
     },{
       keplerName: data.kepler_name
