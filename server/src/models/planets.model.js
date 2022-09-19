@@ -27,7 +27,6 @@ async function loadPlanetsData(){
             if (isHabitablePlanet(data)) {
               // console.log(data.kepler_name);
              await savePlanet(data);
-        
             }
           })
           .on('error', (err) => {

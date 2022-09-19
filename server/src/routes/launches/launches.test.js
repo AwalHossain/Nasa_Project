@@ -1,15 +1,27 @@
 const request = require('supertest');
+const { mongoConnect, mongoDisconnect } = require('../../../db/connection');
 const app = require('../../app');
+const { loadPlanetsData } = require('../../models/planets.model');
 
 
 
-describe('Test GET /launches', ()=>{
+describe("Launches API",()=>{
+  beforeAll(async ()=>{
+   await mongoConnect();
+    await loadPlanetsData();
+  }, 15000)
+
+  afterAll( async()=>{
+    await mongoDisconnect();
+  })
+
+
+  describe('Test GET /launches', ()=>{
     test("It should respond with 200 success", async()=>{
         const response = await request(app)
         .get('/launches')
         .expect("Content-Type", /json/)
         .expect(200);
-
         expect(response.statusCode).toBe(200);
     });
 })
@@ -18,23 +30,23 @@ describe('Test GET /launches', ()=>{
 
 describe("Test POST /launch", ()=>{
   
-        const completeLaunchData = {
-            mission: 'USS Enterprise',
-            rocket: 'NCC 1701-D',
-            target: 'Kepler-186 f',
-            launchDate: 'January 4, 2028',
-          };
+        const completeLaunchData ={
+          mission:"i want",
+          launchDate:"23January 2025",
+          rocket:"ldaofd 3k3",
+          destination:"Kepler-296 A f"
+        }
         
           const launchDataWithoutDate = {
             mission: 'USS Enterprise',
             rocket: 'NCC 1701-D',
-            target: 'Kepler-186 f',
+            destination: 'Kepler-186 f',
           };
         
           const launchDataWithInvalidDate = {
             mission: 'USS Enterprise',
             rocket: 'NCC 1701-D',
-            target: 'Kepler-186 f',
+            destination: 'Kepler-186 f',
             launchDate: 'zoot',
           };
           test("It should return with 201", async()=>{
@@ -44,6 +56,8 @@ describe("Test POST /launch", ()=>{
               .expect("Content-Type", /json/)
               .send(completeLaunchData)
               .expect(201)
+        console.log(response,"checking");
+
           });
 
           test("It should return an invlid data", async()=>{
@@ -63,3 +77,9 @@ describe("Test POST /launch", ()=>{
 
     test("It should catch invalid dates", ()=>{});
 })
+
+
+})
+
+
+// jest.setTimeout(30000)

@@ -89,7 +89,11 @@ async function existLaunchWithId(launchId) {
 
 
 async function getAllLaunches() {
-    return await launchDatabase.find({}, { "_id": 0, "__v": 0 })
+    console.log("ist it workin");
+    let data =  await launchDatabase.find({});
+    console.log(data,"ooo");
+
+    return data;
 }
 
 

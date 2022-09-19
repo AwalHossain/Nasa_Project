@@ -2,9 +2,10 @@ const { getAllLaunches, existLaunchWithId, abortLaunchById, scheduleNewLaunch } 
 
 
 
-function httpGetAllLaunches(req, res) {
-
-    return res.status(200).json(getAllLaunches());
+ async function httpGetAllLaunches(req, res) {
+    const all = await getAllLaunches();
+    console.log(all,"chekido");
+    return res.status(200).json(all);
 }
 
 
