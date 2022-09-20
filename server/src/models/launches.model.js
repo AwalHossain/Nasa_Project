@@ -1,9 +1,78 @@
 
-let launches = new Map();
 const launchDatabase = require('./launch.mongo');
 const planets = require("./planet.mongo")
-
+const axios = require('axios')
 let DEFAULT_FLIGHT_NUMBER = 100;
+
+
+const SPACEX_API_URL = 'https://api.spacexdata.com/v4/launches/query';
+
+async function populateLaunches() {
+    const response = await axios.post(SPACEX_API_URL, {
+        query: {},
+        option: {
+            populate: [
+                {
+                    path: "rocket",
+                    select: {
+                        name: 1
+                    }
+                },
+                {
+                    path: "payloads",
+                    select: {
+                        "customer": 1
+                    }
+                }
+            ]
+        }
+    })
+
+    if(response.status !== 200){
+        console.log('Problem downloading launch data');
+        throw new Error('Launch data download failed');
+    }
+
+    const launchDocs = response.data.docs;
+    for (const launchDoc of launchDocs) {
+        const payloads = launchDoc['payloads'];
+
+        const customers = payloads.flatMap((payload) => {
+            return payload['customers']
+        })
+
+        const launch = {
+            flightNumber: launchDoc['flight_number'],
+            mission: launchDoc['name'],
+            rocket: launchDoc['rocket']['name'],
+            launchDate: launchDoc['date_local'],
+            upcoming: launchDoc['upcoming'],
+            success: launchDoc['success'],
+            customers,
+        }
+
+    console.log(`${launch.flightNumber} ${launch.mission}`);
+        await saveLaunch(launch);
+    }
+}
+
+
+
+async function loadLaunchData() {
+    const firstLaunch = await findLaunch({
+        flightNumber: 1,
+        rocket: 'Falcon 1',
+        mission: 'FalconSat',
+    })
+
+    if (firstLaunch) {
+        console.log('Launch data already loaded!');
+    } else {
+        await populateLaunches();
+    }
+
+}
+
 
 const launch = {
     flightNumber: 100,
@@ -22,11 +91,11 @@ const launch = {
 
 async function saveLaunch(launch) {
 
-    const planet = await planets.findOne({ keplerName: launch.destination })
-    console.log(planet, "save", launch.destination);
-    if (!planet) {
-        throw new Error("NO matching planet found")
-    }
+    // const planet = await planets.findOne({ keplerName: launch.destination })
+    // console.log(planet, "save", launch.destination);
+    // if (!planet) {
+    //     throw new Error("NO matching planet found")
+    // }
 
     await launchDatabase.findOneAndUpdate({
         flightNumber: launch.flightNumber
@@ -63,24 +132,13 @@ async function scheduleNewLaunch(lauch) {
 }
 
 
-
-// function addNewLaunch(launch) {
-//     latestFlightNumber++;
-
-//     // console.log(launch,"model");
-//     launches.set(latestFlightNumber, Object.assign(launch, {
-//         suceess: true,
-//         upcoming: true,
-//         customers: ["ZTM", "NASA"],
-//         flightNumber: latestFlightNumber,
-//     })
-
-//     );
-// }
+async function findLaunch(filter) {
+    return await launchDatabase.findOne(filter)
+}
 
 
 async function existLaunchWithId(launchId) {
-    const getId = await launchDatabase.findOne({
+    const getId = await findLaunch({
         flightNumber: launchId
     })
     return getId;
@@ -90,8 +148,8 @@ async function existLaunchWithId(launchId) {
 
 async function getAllLaunches() {
     console.log("ist it workin");
-    let data =  await launchDatabase.find({});
-    console.log(data,"ooo");
+    let data = await launchDatabase.find({});
+    console.log(data, "ooo");
 
     return data;
 }
@@ -107,7 +165,7 @@ async function abortLaunchById(launchId) {
     }
     )
 
-    console.log(aborted,"getting abor");
+    console.log(aborted, "getting abor");
 
     return (aborted.matchedCount === 1 && aborted.modifiedCount === 1)
 
@@ -121,6 +179,7 @@ async function abortLaunchById(launchId) {
 
 module.exports = {
     existLaunchWithId,
+    loadLaunchData,
     scheduleNewLaunch,
     getAllLaunches,
     abortLaunchById
