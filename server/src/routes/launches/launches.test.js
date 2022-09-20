@@ -9,7 +9,7 @@ describe("Launches API",()=>{
   beforeAll(async ()=>{
    await mongoConnect();
     await loadPlanetsData();
-  }, 15000)
+  },14000)
 
   afterAll( async()=>{
     await mongoDisconnect();
@@ -56,8 +56,6 @@ describe("Test POST /launch", ()=>{
               .expect("Content-Type", /json/)
               .send(completeLaunchData)
               .expect(201)
-        console.log(response,"checking");
-
           });
 
           test("It should return an invlid data", async()=>{
