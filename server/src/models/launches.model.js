@@ -92,12 +92,6 @@ const launch = {
 
 async function saveLaunch(launch) {
 
-    // const planet = await planets.findOne({ keplerName: launch.destination })
-    // console.log(planet, "save", launch.destination);
-    // if (!planet) {
-    //     throw new Error("NO matching planet found")
-    // }
-
  const response =   await launchDatabase.findOneAndUpdate({
         flightNumber: launch.flightNumber
     }, launch, {
@@ -110,7 +104,6 @@ async function saveLaunch(launch) {
 
 async function getLatestFlightNumber() {
     const latestLaunch = await launchDatabase.findOne({}).sort("-flightNumber")
-    console.log(latestLaunch, "number");
     if (!latestLaunch) {
         return DEFAULT_FLIGHT_NUMBER;
     }
@@ -148,9 +141,12 @@ async function existLaunchWithId(launchId) {
 
 
 
-async function getAllLaunches() {
+async function getAllLaunches(skip, limit) {
     console.log("ist it workin");
-    let data = await launchDatabase.find({});
+    let data = await launchDatabase.find({})
+    .sort({flightNumber:1})
+    .skip(skip)
+    .limit(limit);
     console.log(data, "ooo");
 
     return data;

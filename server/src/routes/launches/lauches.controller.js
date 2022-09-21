@@ -1,9 +1,12 @@
 const { getAllLaunches, existLaunchWithId, abortLaunchById, scheduleNewLaunch } = require("../../models/launches.model");
+const { getPagination } = require("../../services/query");
 
 
 
  async function httpGetAllLaunches(req, res) {
-    const all = await getAllLaunches();
+
+    const {skip, limit} = getPagination(req.query);
+    const all = await getAllLaunches(skip, limit);
     console.log(all,"chekido");
     return res.status(200).json(all);
 }
