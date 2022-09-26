@@ -7,7 +7,6 @@ const { getPagination } = require("../../services/query");
 
     const {skip, limit} = getPagination(req.query);
     const all = await getAllLaunches(skip, limit);
-    console.log(all,"chekido");
     return res.status(200).json(all);
 }
 

@@ -147,7 +147,6 @@ async function getAllLaunches(skip, limit) {
     .sort({flightNumber:1})
     .skip(skip)
     .limit(limit);
-    console.log(data, "ooo");
 
     return data;
 }
