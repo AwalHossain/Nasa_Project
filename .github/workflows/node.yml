@@ -1,9 +1,9 @@
 name: NASA Project CI
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,5 +13,5 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - run: npm install --prefix client
-      - run: yarn run build --prefix client
+      - run: npm install
+      - run: npm run build --prefix client
