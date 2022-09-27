@@ -19,7 +19,7 @@ describe("Launches API",()=>{
   describe('Test GET /launches', ()=>{
     test("It should respond with 200 success", async()=>{
         const response = await request(app)
-        .get('/launches')
+        .get('/v1/launches')
         .expect("Content-Type", /json/)
         .expect(200);
         expect(response.statusCode).toBe(200);
@@ -52,7 +52,7 @@ describe("Test POST /launch", ()=>{
           test("It should return with 201", async()=>{
 
               const response = await request(app)
-              .post('/launches')
+              .post('/v1/launches')
               .expect("Content-Type", /json/)
               .send(completeLaunchData)
               .expect(201)
@@ -61,7 +61,7 @@ describe("Test POST /launch", ()=>{
           test("It should return an invlid data", async()=>{
 
             const response = await request(app)
-            .post('/launches')
+            .post('/v1/launches')
             .expect("Content-Type", /json/)
             .send(launchDataWithInvalidDate)
             .expect(400)

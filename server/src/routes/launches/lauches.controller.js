@@ -13,7 +13,7 @@ const { getPagination } = require("../../services/query");
 
 async function httpAddNewLaunch(req, res) {
     const launch = req.body;
-
+    console.log(req.body,"checking",req.query);
     if (!launch.mission || !launch.rocket || !launch.launchDate || !launch.destination) {
         return res.status(400).json({
             error: 'Missing required launch property',
