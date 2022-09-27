@@ -142,7 +142,6 @@ async function existLaunchWithId(launchId) {
 
 
 async function getAllLaunches(skip, limit) {
-    console.log("ist it workin");
     let data = await launchDatabase.find({})
     .sort({flightNumber:1})
     .skip(skip)

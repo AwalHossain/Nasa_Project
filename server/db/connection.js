@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const URL = "mongodb+srv://nasa:MOzRaRKnbvcp9Ado@cluster0.33slg.mongodb.net/nasaDB?retryWrites=true&w=majority";
+const URL =  "mongodb+srv://nasa:MOzRaRKnbvcp9Ado@cluster0.33slg.mongodb.net/nasaDB?retryWrites=true&w=majority";
 
 
 
