@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
 
-const URL = process.env.URL
+
+const URL = "mongodb+srv://nasa:MOzRaRKnbvcp9Ado@cluster0.33slg.mongodb.net/nasaDB?retryWrites=true&w=majority";
 
 
 

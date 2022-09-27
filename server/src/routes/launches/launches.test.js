@@ -16,16 +16,6 @@ describe("Launches API",()=>{
   })
 
 
-  describe('Test GET /launches', ()=>{
-    test("It should respond with 200 success", async()=>{
-        const response = await request(app)
-        .get('/v1/launches')
-        .expect("Content-Type", /json/)
-        .expect(200);
-        expect(response.statusCode).toBe(200);
-    });
-})
-
 
 
 describe("Test POST /launch", ()=>{
@@ -74,6 +64,16 @@ describe("Test POST /launch", ()=>{
 
 
     test("It should catch invalid dates", ()=>{});
+})
+
+describe('Test GET /launches', ()=>{
+  test("It should respond with 200 success", async()=>{
+      const response = await request(app)
+      .get('/v1/launches')
+      .expect("Content-Type", /json/)
+      .expect(200);
+      expect(response.statusCode).toBe(200);
+  });
 })
 
 
