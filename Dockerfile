@@ -8,7 +8,7 @@ COPY package*.json client/
 RUN npm install client --omit=dev
 
 
-COPY package*.json ./server
+COPY package*.json server/
 RUN npm install server --omit=dev
 
 COPY client/ client/
