@@ -2,13 +2,19 @@ FROM node:lts-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY .package*.json ./
+
+COPY package*.json client/
+RUN npm install-client --omit=dev
 
 
-RUN npm install --omit=dev
+COPY package*.json ./server
+RUN npm inastall-server --omit=dev
 
+COPY client/ client/
 RUN npm run build --prefix client
 
+COPY server/ server/
 
 USER node
 
