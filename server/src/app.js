@@ -15,7 +15,7 @@ app.post('/gey', (req,res)=>{
 })
 
 
-// app.use(express.static(path.join(__dirname, "..", "public")))
+app.use(express.static(path.join(__dirname, "..", "public")))
 
 
 
