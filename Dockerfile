@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 
-RUN npm install --only=production
+RUN npm install --omit=dev
 
 RUN npm run build --prefix client
 
