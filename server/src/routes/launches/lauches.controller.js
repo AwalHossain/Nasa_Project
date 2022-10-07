@@ -3,9 +3,9 @@ const { getPagination } = require("../../services/query");
 
 
 
- async function httpGetAllLaunches(req, res) {
+async function httpGetAllLaunches(req, res) {
 
-    const {skip, limit} = getPagination(req.query);
+    const { skip, limit } = getPagination(req.query);
     const all = await getAllLaunches(skip, limit);
     return res.status(200).json(all);
 }
@@ -13,7 +13,7 @@ const { getPagination } = require("../../services/query");
 
 async function httpAddNewLaunch(req, res) {
     const launch = req.body;
-    console.log(req.body,"checking",req.query);
+    console.log(req.body, "checking", req.query);
     if (!launch.mission || !launch.rocket || !launch.launchDate || !launch.destination) {
         return res.status(400).json({
             error: 'Missing required launch property',
@@ -27,33 +27,33 @@ async function httpAddNewLaunch(req, res) {
         });
     }
 
-  await scheduleNewLaunch(launch)
+    await scheduleNewLaunch(launch)
     return res.status(201).json(launch)
 }
 
 
- 
-async function httpAbortLaunch(req,res){
+
+async function httpAbortLaunch(req, res) {
     const launchId = Number(req.params.id);
 
-    const existsLaunch =await existLaunchWithId(launchId);
+    const existsLaunch = await existLaunchWithId(launchId);
     // if id is not valid
-    if(!existsLaunch){
+    if (!existsLaunch) {
         res.status(404).json({
-            error:"Launch not found"
+            error: "Launch not found"
         })
     }
 
     // aborte mission
     const aborted = await abortLaunchById(launchId);
-    
-    if(!aborted){
+
+    if (!aborted) {
         return res.status(400).json({
-            errr:"Launch not aborted"
+            errr: "Launch not aborted"
         })
     }
 
-    return res.status(200).json({ok: "true"})
+    return res.status(200).json({ ok: "true" })
 }
 
 
