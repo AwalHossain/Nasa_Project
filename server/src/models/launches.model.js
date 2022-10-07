@@ -11,26 +11,26 @@ async function populateLaunches() {
     const response = await axios.post(SPACEX_API_URL, {
         "query": {},
         "options": {
-        "pagination":false,
-          "populate": [
-            {
-              "path": "rocket",
-              "select": {
-                "name": 1
-              }
-            },
-            {
-              "path": "payloads",
-              "select": {
-                "customers": 1
-              }
-            }
-          ]
-          
+            "pagination": false,
+            "populate": [
+                {
+                    "path": "rocket",
+                    "select": {
+                        "name": 1
+                    }
+                },
+                {
+                    "path": "payloads",
+                    "select": {
+                        "customers": 1
+                    }
+                }
+            ]
+
         }
     })
 
-    if(response.status !== 200){
+    if (response.status !== 200) {
         console.log('Problem downloading launch data');
         throw new Error('Launch data download failed');
     }
@@ -52,7 +52,7 @@ async function populateLaunches() {
             customers,
         }
 
-    console.log(`${launch.flightNumber} ${launch.customers}`);
+        console.log(`${launch.flightNumber} ${launch.customers}`);
         await saveLaunch(launch);
     }
 }
@@ -65,7 +65,7 @@ async function loadLaunchData() {
         rocket: 'Falcon 1',
         mission: 'FalconSat',
     })
-    console.log(firstLaunch,"odao");
+    console.log(firstLaunch, "odao");
     if (firstLaunch) {
         console.log('Launch data already loaded!');
     } else {
@@ -92,7 +92,7 @@ const launch = {
 
 async function saveLaunch(launch) {
 
- const response =   await launchDatabase.findOneAndUpdate({
+    const response = await launchDatabase.findOneAndUpdate({
         flightNumber: launch.flightNumber
     }, launch, {
         upsert: true,
@@ -143,9 +143,9 @@ async function existLaunchWithId(launchId) {
 
 async function getAllLaunches(skip, limit) {
     let data = await launchDatabase.find({})
-    .sort({flightNumber:1})
-    .skip(skip)
-    .limit(limit);
+        .sort({ flightNumber: 1 })
+        .skip(skip)
+        .limit(limit);
 
     return data;
 }
