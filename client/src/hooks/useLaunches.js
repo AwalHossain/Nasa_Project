@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 
 import {
-  httpAbortLaunch, httpGetLaunches,
-  httpSubmitLaunch
+  httpGetLaunches,
+  httpSubmitLaunch,
+  httpAbortLaunch,
 } from './requests';
 
 function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
@@ -21,21 +22,18 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
   const submitLaunch = useCallback(async (e) => {
     e.preventDefault();
     setPendingLaunch(true);
-
-
     const data = new FormData(e.target);
     const launchDate = new Date(data.get("launch-day"));
     const mission = data.get("mission-name");
     const rocket = data.get("rocket-name");
-    const destination = data.get("planets-selector");
+    const target = data.get("planets-selector");
     const response = await httpSubmitLaunch({
       launchDate,
       mission,
       rocket,
-      destination,
+      target,
     });
 
-    // TODO: Set success based on response.
     const success = response.ok;
     if (success) {
       getLaunches();
@@ -51,7 +49,6 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
   const abortLaunch = useCallback(async (id) => {
     const response = await httpAbortLaunch(id);
 
-    // TODO: Set success based on response.
     const success = response.ok;
     if (success) {
       getLaunches();

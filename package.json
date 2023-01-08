@@ -14,15 +14,7 @@
     "deploy-cluster": "npm run build --prefix client && npm run cluster --prefix server",
     "test": "npm test --prefix server && npm test --prefix client"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AwalHossain/Nasa_Project.git"
-  },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AwalHossain/Nasa_Project/issues"
-  },
-  "homepage": "https://github.com/AwalHossain/Nasa_Project#readme"
+  "license": "ISC"
 }
