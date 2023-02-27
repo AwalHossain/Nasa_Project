@@ -16,6 +16,7 @@ This project is a dashboard that was designed and developed to schedule missions
 -   Mongoose-Schema
 -   Jest
 
+
 ## Key Features
 
 -   **Continuous Integration/Development Pipeline Integration:** A pipeline was established to integrate continuous integration/development to ensure smooth deployment and release of new features.
@@ -25,6 +26,11 @@ This project is a dashboard that was designed and developed to schedule missions
 -   **Deployment with Docker on AWS EC2:** Docker was used to deploy the project on an AWS EC2 instance, which enabled the project to be easily scaled and managed.
     
 -   **MongoDB Data Management with Mongoose Schema:** Mongoose schema was applied for MongoDB data management to ensure that the data was organized and easily accessible.
+
+
+![image](https://user-images.githubusercontent.com/80216813/221490226-b3710a5c-ac51-4093-970e-a1f2845d73a6.png)
+
+
 
 ## Running the Project
 
