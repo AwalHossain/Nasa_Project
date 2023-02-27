@@ -1,12 +1,30 @@
-# NASA Mission Control Project
+# NASA Mission Control Dashboard
+
+This project is a dashboard that was designed and developed to schedule missions targeting Kepler exo-planets for NASA mission control.
+
+![image](https://user-images.githubusercontent.com/80216813/221490036-ff00db10-a07b-487a-a671-3d1e74c013f7.png)
 
 
-## Getting Started
+## Technologies Used
 
-1. Ensure you have Node.js installed.
-2. Create a free [Mongo Atlas](https://www.mongodb.com/atlas/database) database online or start a local MongoDB database.
-3. Create a `server/.env` file with a `MONGO_URL` property set to your MongoDB connection string.
-4. In the terminal, run: `npm install`
+-   NodeJS
+-   ReactJS
+-   AWS
+-   Docker
+-   ExpressJS
+-   MongoDB
+-   Mongoose-Schema
+-   Jest
+
+## Key Features
+
+-   **Continuous Integration/Development Pipeline Integration:** A pipeline was established to integrate continuous integration/development to ensure smooth deployment and release of new features.
+    
+-   **API Testing:** The APIs were thoroughly tested by Jest to ensure that they met the project requirements and were functioning correctly.
+    
+-   **Deployment with Docker on AWS EC2:** Docker was used to deploy the project on an AWS EC2 instance, which enabled the project to be easily scaled and managed.
+    
+-   **MongoDB Data Management with Mongoose Schema:** Mongoose schema was applied for MongoDB data management to ensure that the data was organized and easily accessible.
 
 ## Running the Project
 
